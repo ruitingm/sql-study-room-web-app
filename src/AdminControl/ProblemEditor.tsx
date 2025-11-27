@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import { updateProblem } from "../Problem/problemSlice";
@@ -40,12 +40,16 @@ export default function ProblemEditor({
   const [difficulty, setDifficulty] = useState<ProblemDifficultyTag>(
     problem.difficultyTag
   );
-  const [concepts, setConcepts] = useState<ProblemCategory[]>([...problem.conceptTag]);
+  const [concepts, setConcepts] = useState<ProblemCategory[]>([
+    ...problem.conceptTag,
+  ]);
   const solutions = useSelector(
     (state: RootState) => state.solutionReducer.solutions
   );
-  const pSolution  = solutions?.find((s) => s.sId === problem.pSolutionId);
-  const [solution, setSolution] = useState<string>(pSolution ? pSolution.sDescription : "");
+  const pSolution = solutions?.find((s) => s.sId === problem.pSolutionId);
+  const [solution, setSolution] = useState<string>(
+    pSolution ? pSolution.sDescription : ""
+  );
   const toggleConcept = (tag: ProblemCategory) => {
     setConcepts((prev) =>
       prev.includes(tag) ? prev.filter((c) => c !== tag) : [...prev, tag]

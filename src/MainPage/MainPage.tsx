@@ -26,7 +26,7 @@ export default function MainPage() {
           <Route path="profile" element={<Profile />} />
           <Route path="report" element={<Report />} />
           <Route path="allproblems" element={<AllProblems />} />
-          <Route path="chat" element={<AIChat />} />
+          <Route path="chat/*" element={<AIChat />} />
           <Route path="problems/:pId" element={<ProblemEdit />} />
           {currentUser?.isAdmin && (
             <Route path="admin-control/*" element={<AdminControl />} />

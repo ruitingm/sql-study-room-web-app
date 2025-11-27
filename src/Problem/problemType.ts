@@ -20,7 +20,7 @@ export type Problem = {
   difficultyTag: ProblemDifficultyTag;
   conceptTag: ProblemCategory[];
   pDescription: string;
-  pSolutionId: number | null;
+  pSolutionId?: number | null;
   reviewed: boolean;
 };
 

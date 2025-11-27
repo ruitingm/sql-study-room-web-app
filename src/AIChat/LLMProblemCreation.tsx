@@ -1,0 +1,56 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addProblem } from "../Problem/problemSlice";
+import { problemDifficulties } from "../Problem/problemType";
+
+export default function LLMProblemCreation() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [description, setDescription] = useState("");
+  const handleSave = () => {
+    const tempProblemId = Math.floor(Math.random() * 1000000);
+    const problem = {
+      pId: tempProblemId,
+      pTitle: "",
+      pDescription: description,
+      difficultyTag: problemDifficulties[0],
+      conceptTag: [],
+      reviewed: false,
+    };
+    dispatch(addProblem(problem));
+    navigate("../");
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-md p-6 h-full overflow-y-auto text-stone-800">
+      <h2 className="text-2xl font-semibold">Add New Problem</h2>
+      <hr />
+      <div className="mt-6 mb-4">
+        <label className="text-lg font-medium text-stone-600">
+          Problem Description
+        </label>
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows={6}
+          className="w-full h-full min-h-[500px] bg-stone-800 text-stone-50 font-mono text-md rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-white"
+        />
+      </div>
+      <div className="flex justify-end gap-3 mt-4">
+        <button
+          onClick={() => navigate("..")}
+          className="px-5 py-2 bg-neutral-300 text-stone-800 rounded-md hover:bg-neutral-400 transition"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={handleSave}
+          className="px-5 py-2 bg-rose-800 text-white rounded-md hover:bg-rose-900 transition"
+        >
+          Publish
+        </button>
+      </div>
+    </div>
+  );
+}

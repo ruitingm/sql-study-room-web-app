@@ -53,8 +53,8 @@ export default function AdminControl() {
           {problemViewMode === "list" && (
             <ProblemPanel
               onCreate={(id: number) => {
-                setProblemViewMode("create")
-                setSelectedProblemId(id)
+                setProblemViewMode("create");
+                setSelectedProblemId(id);
               }}
               onEdit={(id: number) => {
                 setSelectedProblemId(id);
@@ -62,8 +62,11 @@ export default function AdminControl() {
               }}
             />
           )}
-          {problemViewMode === "create" && selectedProblemId &&(
-            <ProblemCreation pId={selectedProblemId} onBack={resetProblemView} />
+          {problemViewMode === "create" && selectedProblemId && (
+            <ProblemCreation
+              pId={selectedProblemId}
+              onBack={resetProblemView}
+            />
           )}
           {problemViewMode === "edit" && selectedProblemId && (
             <ProblemEditor pId={selectedProblemId} onBack={resetProblemView} />

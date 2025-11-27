@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, Routes, Route } from "react-router-dom";
+import { Plus } from "lucide-react";
+import LLMProblemCreation from "./LLMProblemCreation";
 
 export default function AIChat() {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([
     { sender: "user", text: "Hello there!" },
     { sender: "ai", text: "Hi, How can I help you?" },
@@ -41,31 +45,23 @@ Write a SQL query to list all customers and their total amount spent, including 
     const newMessage = { sender: "user", text: input };
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
-
-    // try {
-    //   const res = await fetch("http://localhost:8000/chat", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ message: input }),
-    //   });
-    //   const data = await res.json();
-    //   setMessages((prev) => [...prev, { sender: "bot", text: data.reply }]);
-    // } catch (error) {
-    //   setMessages((prev) => [
-    //     ...prev,
-    //     { sender: "bot", text: "Error connecting to server." },
-    //   ]);
-    // }
   };
-
   const handleKeyPress = (e: any) => {
     if (e.key === "Enter") sendMessage();
   };
-
-  return (
+  const ChatInterface = () => (
     <div className="flex flex-col h-full rounded-xl bg-stone-100 shadow-lg">
-      <div className="bg-neutral-400 text-stone-800 text-center py-4 font-semibold text-xl rounded-t-xl">
-        {model} Chat Assistant
+      <div className="bg-neutral-400 text-stone-800 text-center py-4 font-semibold text-xl rounded-t-xl flex flex-row items-center">
+        <div className="flex-1">{model} Chat Assistant</div>
+        <div className="me-5 text-sm">
+          <button
+            onClick={() => navigate("llm-problem-creation")}
+            className="bg-neutral-300 text-stone-700 px-4 py-2 rounded-md hover:ring-rose-700 hover:ring-2  transition flex flex-row items-center space-x-2"
+          >
+            <Plus size={16} />
+            <span>Add New Problem</span>
+          </button>
+        </div>
       </div>
       <div className="flex-1 overflow-y-auto p-6 flex flex-col space-y-3 bg-stone-50">
         {messages.map((msg, index) => (
@@ -104,5 +100,12 @@ Write a SQL query to list all customers and their total amount spent, including 
         </button>
       </div>
     </div>
+  );
+
+  return (
+    <Routes>
+      <Route index element={<ChatInterface />} />
+      <Route path="llm-problem-creation" element={<LLMProblemCreation />} />
+    </Routes>
   );
 }
