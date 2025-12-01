@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.urls import path
 from api.views.health_views import health
-from api.views.auth_views import login
+from api.views.auth_views import login, get_profile, update_profile
 from api.views.problem_views import list_problems, get_problem, submit_problem
 from api.views.tag_views import list_tags, list_tag_problems
 from api.views.submission_views import list_submissions
@@ -25,6 +25,8 @@ from api.views.chat_views import nl2sql
 urlpatterns = [
     path("health/", health),
     path("auth/login/", login),
+    path("profile/<int:account_number>/", get_profile),
+    path("profile/<int:account_number>/update/", update_profile),
     path("problems/", list_problems),
     path("problems/<int:pid>/", get_problem),
     path("problems/<int:pid>/submit/", submit_problem),
