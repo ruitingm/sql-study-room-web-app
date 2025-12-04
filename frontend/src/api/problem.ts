@@ -26,7 +26,7 @@ export async function fetchProblemsApi() {
  * @param reviewed - true to get reviewed problems, false to get unreviewed problems
  */
 export async function fetchReviewedProblemsApi(reviewed: boolean = false) {
-  const response = await fetch(`${BASE_URL}/problems/?reviewed=${reviewed}`, {
+  const response = await fetch(`${API_BASE_URL}/problems/?reviewed=${reviewed}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
