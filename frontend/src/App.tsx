@@ -15,7 +15,7 @@ import "./App.css";
 import Login from "./Login/Login";
 import Signup from "./Login/Signup";
 import MainPage from "./MainPage/MainPage";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "./store/hooks";
 import { useEffect, useState } from "react";
 import { fetchProblems } from "./Problem/problemSlice";
 // import { setProblems } from "./Problem/problemSlice";
@@ -26,7 +26,7 @@ import { fetchProblems } from "./Problem/problemSlice";
 // import userJson from "./Database/user.json";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [loadFailed, setLoadFailed] = useState(false);
 
@@ -44,15 +44,12 @@ function App() {
     };
 
     loadData();
-    // dispatch(setProblems(parseProblems()));
-    // dispatch(setSolutions(solutionJson));
-    // dispatch(setUsers(userJson));
   }, [dispatch]);
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50">
-        <p className="text-stone-600 text-lg">Loading problems...</p>
+        <p className="text-stone-600 text-lg">Loading page...</p>
       </div>
     );
   }
@@ -60,9 +57,9 @@ function App() {
   if (loadFailed) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-stone-50 space-y-4">
-        <p className="text-rose-700 text-lg">Couldn’t reach the server.</p>
+        <p className="text-rose-800 text-lg">Couldn’t reach the server.</p>
         <button
-          className="px-4 py-2 bg-sky-600 text-white rounded-md"
+          className="px-4 py-2 bg-stone-300 text-stone-800 hover:bg-stone-400 rounded-md"
           onClick={async () => {
             setIsLoading(true);
             setLoadFailed(false);

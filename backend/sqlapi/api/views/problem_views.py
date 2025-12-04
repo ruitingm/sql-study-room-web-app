@@ -11,6 +11,7 @@ from rest_framework.response import Response
 import datetime
 
 # List all problems
+@api_view(['GET'])
 def list_problems(request):
     with connection.cursor() as cursor:
         cursor.execute("""
@@ -20,7 +21,8 @@ def list_problems(request):
                 p.Review_status,
                 t.Tag_ID,
                 d.Difficulty_level,
-                c.SQL_concept
+                c.SQL_concept,
+                p.Problem_title
             FROM PROBLEM p
             LEFT JOIN TAG t ON p.Tag_ID = t.Tag_ID
             LEFT JOIN DIFFICULTY_TAG d ON t.Difficulty_ID = d.Difficulty_ID
@@ -33,13 +35,12 @@ def list_problems(request):
     for row in rows:
         problem_id = row[0]
         description = row[1] or ""
-        views = row[2] 
-        solutions = row[3] 
-        difficulty = row[4] or ""
-        concept = row[5] or ""
+        difficulty = row[3] or ""
+        concept = row[4] or ""
+        title = row[5] or ""
 
-        # Generate title
-        p_title = description.split("\n")[0][:80]
+        # generate title
+        # p_title = description.split("\n")[0][:80]
 
         concept_tags = (
             [c.strip().capitalize() for c in concept.split(",")]
@@ -48,7 +49,7 @@ def list_problems(request):
 
         results.append({
             "pId": problem_id,
-            "pTitle": p_title,
+            "pTitle": title,
             "difficultyTag": difficulty.capitalize(),
             "conceptTag": concept_tags,
             "pDescription": description,
@@ -60,6 +61,7 @@ def list_problems(request):
 
 
 # Get a single problem
+@api_view(['GET'])
 def get_problem(request, pid):
     with connection.cursor() as cursor:
         cursor.execute("""
@@ -68,7 +70,8 @@ def get_problem(request, pid):
                 p.Problem_description,
                 t.Tag_ID,
                 d.Difficulty_level,
-                c.SQL_concept
+                c.SQL_concept,
+                p.Problem_title
             FROM PROBLEM p
             LEFT JOIN TAG t ON p.Tag_ID = t.Tag_ID
             LEFT JOIN DIFFICULTY_TAG d ON t.Difficulty_ID = d.Difficulty_ID
@@ -86,15 +89,16 @@ def get_problem(request, pid):
     tag_id = row[2]
     difficulty = row[3]
     concept = row[4]
+    title = row[5]
 
-    p_title = description.split("\n")[0][:80] if description else ""
+    # p_title = description.split("\n")[0][:80] if description else ""
     concept_tags = (
         [c.strip() for c in concept.split(",")] if concept else []
     )
 
     return JsonResponse({
         "pId": problem_id,
-        "pTitle": p_title,
+        "pTitle": title,
         "difficultyTag": difficulty.capitalize() if difficulty else "",
         "conceptTag": concept_tags,
         "pDescription": description,

@@ -9,7 +9,6 @@ import {
   ScrollText,
   MessageCircleMore,
   User,
-  ChartColumnIncreasing,
   SlidersHorizontal,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
@@ -25,7 +24,6 @@ export default function NavigationBar() {
   const navLinks = [
     { label: "problem", path: "/main/allproblems", icon: ScrollText },
     { label: "chat", path: "/main/chat", icon: MessageCircleMore },
-    { label: "report", path: "/main/report", icon: ChartColumnIncreasing },
     { label: "profile", path: "/main/profile", icon: User },
     {
       label: "admin",
@@ -38,9 +36,9 @@ export default function NavigationBar() {
   return (
     <aside
       id="navigation"
-      className="fixed left-2 top-4 bottom-4 w-20 flex-col justify-between items-center rounded-xl bg-stone-200 shadow-lg hidden md:block"
+      className="fixed left-2 top-4 bottom-4 w-20 hidden md:flex flex-col rounded-xl bg-stone-200 shadow-lg"
     >
-      <nav className="flex flex-col items-center space-y-8 pb-8">
+      <nav className="flex-1 flex flex-col items-center space-y-8 pt-4">
         <Link to="/main/allproblems">
           <img
             src="/images/sql-study-room-logo.png"
@@ -48,10 +46,7 @@ export default function NavigationBar() {
             className="hover:cursor-pointer"
           />
         </Link>
-        {/* {navLinks
-          .filter((link) => !link.adminOnly || currentUser?.isAdmin)
-          .map((link) => {
-            const isActive = pathname.includes(link.label); */}
+
         {navLinks
           .filter((link) => !link.adminOnly || currentUser?.isAdmin)
           .map((link) => {
@@ -70,13 +65,13 @@ export default function NavigationBar() {
                     className="text-stone-500 transition-all duration-200"
                   />
                 </div>
-                <div>{link.label}</div>
+                <div className="text-xs">{link.label}</div>
               </Link>
             );
           })}
       </nav>
-      {/* User Info */}
-      <div className="mb-4 text-center text-xs text-stone-700">
+
+      <div className="mt-auto mb-4 text-center text-xs text-stone-700">
         {currentUser && (
           <>
             <div>

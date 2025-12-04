@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import pymysql
+
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -111,16 +114,19 @@ DATABASES = {
 #     }
 # }
 
-# DATABASES = {
-#     "default": {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': "sql_study_room",
-#         'USER': "ruitingm",
-#         "PASSWORD": "123A456b789c.",
-#         'HOST': "127.0.0.1",
-#         'PORT': '3306'
-#     }
-# }
+DATABASES = {
+    "default": {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "sql_study_room",
+        'USER': "group6",
+        "PASSWORD": "VRpB+zaZ15ki8ZAf",
+        'HOST': "34.182.64.16",
+        'PORT': '3306',
+        'OPTIONS': {
+            'connect_timeout': 5,
+        },
+    }
+}
 
 
 
@@ -170,6 +176,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://frontend-dot-db-group6-475020.uc.r.appspot.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True

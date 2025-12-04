@@ -22,9 +22,9 @@ export async function loginApi(email: string, password: string) {
     accountNumber: data.accountNumber,
     isStudent: data.isStudent === 1,
     isAdmin: data.isAdmin === 1,
+    message: data.message,
   };
 }
-
 
 export async function signupApi(data: {
   firstName: string;

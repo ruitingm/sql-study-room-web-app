@@ -10,7 +10,6 @@
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { setCurrentUser } from "../Profile/userSlice";
-// import { MockLogin } from "./MockLogin";
 import { useState } from "react";
 import { loginApi } from "../api/auth";
 
@@ -21,21 +20,6 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // const handleLogin = (email: string, password: string) => {
-  //   const result = MockLogin(email, password);
-  //   if (!result.success) {
-  //     setError(result.message || null);
-  //     return;
-  //   }
-  //   if (result.user) {
-  //     dispatch(
-  //       setCurrentUser({
-  //         ...result.user,
-  //       })
-  //     );
-  //     navigate("/main");
-  //   }
-  // };
   const handleLogin = async () => {
     setError(null);
     setLoading(true);

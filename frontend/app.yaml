@@ -1,0 +1,11 @@
+runtime: python39
+service: frontend
+handlers:
+  - url: /assets
+    static_dir: dist/assets
+  - url: /
+    static_files: dist/index.html
+    upload: dist/index.html
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html

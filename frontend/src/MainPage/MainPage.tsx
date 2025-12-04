@@ -9,9 +9,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import NavigationBar from "../Nagivation/Navigation";
 import Profile from "../Profile/Profile";
-import Setting from "../Setting/Setting";
 import AIChat from "../AIChat/AIChat";
-import Report from "../Report/Report";
 import AllProblems from "../Problem/AllProblems";
 import ProblemEdit from "../Problem/ProblemEdit";
 import AdminControl from "../AdminControl/AdminControl";
@@ -40,7 +38,6 @@ export default function MainPage() {
         <Routes>
           <Route path="/" element={<Navigate to="allproblems" />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="report" element={<Report />} />
           <Route path="allproblems" element={<AllProblems />} />
           <Route path="chat/*" element={<AIChat />} />
           <Route path="problems/:pId" element={<ProblemEdit />} />
