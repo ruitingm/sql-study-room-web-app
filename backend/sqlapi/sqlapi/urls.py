@@ -21,6 +21,8 @@ from api.views.problem_views import list_problems, get_problem, submit_problem, 
 from api.views.tag_views import list_tags, list_tag_problems
 from api.views.submission_views import list_submissions
 from api.views.chat_views import nl2sql
+from api.views.admin_views import admin_user_stats, admin_problem_stats
+
 
 urlpatterns = [
     path("health/", health),
@@ -43,4 +45,8 @@ urlpatterns = [
     path("submissions/<int:account_number>/", list_submissions),
 
     path("nl2sql/", nl2sql),
+    
+    path("admin/user-stats/", admin_user_stats),
+    path("admin/problem-stats/", admin_problem_stats),
+
 ]
