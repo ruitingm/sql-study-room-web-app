@@ -7,8 +7,13 @@ instance_class: F2
 
 env_variables:
   DJANGO_SETTINGS_MODULE: "sqlapi.settings"
-  SECRET_KEY: "some-secret-key"
+  SECRET_KEY: "YOUR_SECRET_KEY_HERE"
   DEBUG: "false"
+  DB_NAME: "YOUR_DB_NAME"
+  DB_USER: "YOUR_DB_USER"
+  DB_PASSWORD: "YOUR_DB_PASSWORD"
+  DB_HOST: "YOUR_DB_HOST"
+  DB_PORT: "3306"
 
 handlers:
   - url: /static
