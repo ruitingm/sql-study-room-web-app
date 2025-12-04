@@ -12,6 +12,7 @@ import { useNavigate, Routes, Route } from "react-router-dom";
 import { Plus } from "lucide-react";
 import LLMProblemCreation from "./LLMProblemCreation";
 
+
 export default function AIChat() {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([
@@ -55,10 +56,10 @@ Write a SQL query to list all customers and their total amount spent, including 
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
   };
-  const handleKeyPress = (e: any) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") sendMessage();
   };
-  const ChatInterface = () => (
+  const chatInterface = (
     <div className="flex flex-col h-full rounded-xl bg-stone-100 shadow-lg">
       <div className="bg-neutral-400 text-stone-800 text-center py-4 font-semibold text-xl rounded-t-xl flex flex-row items-center">
         <div className="flex-1">{model} Chat Assistant</div>
@@ -113,7 +114,7 @@ Write a SQL query to list all customers and their total amount spent, including 
 
   return (
     <Routes>
-      <Route index element={<ChatInterface />} />
+      <Route index element={chatInterface} />
       <Route path="llm-problem-creation" element={<LLMProblemCreation />} />
     </Routes>
   );
