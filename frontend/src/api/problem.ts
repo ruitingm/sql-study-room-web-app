@@ -4,10 +4,10 @@
  * - Returns parsed JSON of problems on success
  */
 
-const BASE_URL = "https://sql-study-room-2025.uw.r.appspot.com";
+import API_BASE_URL from "./config";
 
 export async function fetchProblemsApi() {
-  const response = await fetch(`${BASE_URL}/problems/`, {
+  const response = await fetch(`${API_BASE_URL}/problems/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
