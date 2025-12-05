@@ -24,3 +24,6 @@ app.yaml
 .idea/
 *.swp
 *.swo
+
+# MacOS
+.DS_Store

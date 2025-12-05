@@ -9,8 +9,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
-import { Plus } from "lucide-react";
+import { Plus, Loader2 } from "lucide-react";
 import LLMProblemCreation from "./LLMProblemCreation";
+import { callNL2SQL, formatQueryResult } from "../api/chat";
 
 
 export default function AIChat() {
@@ -43,6 +44,7 @@ Write a SQL query to list all customers and their total amount spent, including 
 
   const model = "GPT";
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -50,11 +52,35 @@ Write a SQL query to list all customers and their total amount spent, including 
   }, [messages]);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isLoading) return;
 
-    const newMessage = { sender: "user", text: input };
-    setMessages((prev) => [...prev, newMessage]);
+    const userQuestion = input.trim();
+    const userMessage = { sender: "user", text: userQuestion };
+    
+    // 添加用户消息
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
+    setIsLoading(true);
+
+    try {
+      // 调用NL2SQL API
+      const response = await callNL2SQL(userQuestion);
+      const formattedResult = formatQueryResult(response);
+      
+      // 添加AI响应
+      const aiMessage = { sender: "ai", text: formattedResult };
+      setMessages((prev) => [...prev, aiMessage]);
+      
+    } catch (error) {
+      // 处理错误
+      const errorMessage = {
+        sender: "ai",
+        text: `Sorry, I encountered an error: ${error instanceof Error ? error.message : 'Unknown error'}\n\nPlease try again or contact support if the problem persists.`
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") sendMessage();
@@ -96,17 +122,26 @@ Write a SQL query to list all customers and their total amount spent, including 
       <div className="border-t border-gray-300 p-4 bg-stone-50 flex items-center rounded-bl-xl rounded-br-xl">
         <input
           type="text"
-          placeholder="Type your message..."
+          placeholder={isLoading ? "Processing..." : "Ask a question about the database..."}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyPress}
-          className="flex-1 px-4 py-2 rounded-lg bg-gray-100 text-md focus:outline-none"
+          disabled={isLoading}
+          className="flex-1 px-4 py-2 rounded-lg bg-gray-100 text-md focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
         />
         <button
           onClick={sendMessage}
-          className="ml-3 bg-sky-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-sky-700 transition"
+          disabled={isLoading || !input.trim()}
+          className="ml-3 bg-sky-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-sky-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
-          Send
+          {isLoading ? (
+            <>
+              <Loader2 size={16} className="animate-spin" />
+              Processing
+            </>
+          ) : (
+            "Send"
+          )}
         </button>
       </div>
     </div>
