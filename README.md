@@ -37,15 +37,19 @@ The application provides five main features:
 
 ### Use Case Model
 
-![Use Case Model](demo/use_case_model.png)
+<img src="demo/use_case_model.png" width="700" alt="Use Case Model">
 
 ### EER Model
 
-![EER Model](demo/eer_model.png)
+<img src="demo/eer_model.png" width="700" alt="EER Model">
 
 ### Relational Model
 
-![Relational Model](demo/relational_model.png)
+<img src="demo/relational_model.png" width="700" alt="Relational Model">
+
+### System Flow Diagram
+
+<img src="demo/system_flow_diagram.png" width="700" alt="System Flow Diagram">
 
 ## Application Demo
 
